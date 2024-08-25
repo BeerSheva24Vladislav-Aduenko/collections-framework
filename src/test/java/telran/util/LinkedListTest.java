@@ -1,13 +1,12 @@
-
 package telran.util;
 
 import org.junit.jupiter.api.BeforeEach;
 
-public class ArrayListTest extends ListTest{
+public class LinkedListTest extends ListTest{
     @BeforeEach
     @Override
     void setUp() {
-        collection = new ArrayList<>(3);
+        collection = new LinkedList<>();
         super.setUp();
     }
 }
