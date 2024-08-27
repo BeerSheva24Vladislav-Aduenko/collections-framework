@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.function.Predicate;
 @SuppressWarnings("unchecked")
 public class ArrayList<T> implements List<T> {
     private static final int DEFAULT_CAPACITY = 16;
     private Object [] array;
     private int size = 0;
+    
     public ArrayList(int capacity) {
         array = new Object[capacity];
     }
@@ -92,10 +94,25 @@ public class ArrayList<T> implements List<T> {
         }
         return index;
     }
+    @Override
+    public boolean removeIf(Predicate<T> predicate) {
+        boolean res = false;
+        for (int index = size - 1; index > -1; index--) {
+            T item = get(index);
+            if (predicate.test(item)) {
+                remove(index);
+                res = true;
+            }
+        }
+        return res;
+    }
+
     private class ArrayListIterator implements Iterator<T> {
         int currentIndex = 0;
+        private boolean flNext = false;
         @Override
         public boolean hasNext() {
+            flNext = true;
            return currentIndex < size;
         }
 
@@ -107,6 +124,15 @@ public class ArrayList<T> implements List<T> {
             }
             return (T) array[currentIndex++];
         }
+        @Override
+        public void remove() {
+            if(!flNext) {
+                throw new IllegalStateException();
+            }
+            ArrayList.this.remove(--currentIndex);
+            flNext = false;
+        }
+
         
     }
 
