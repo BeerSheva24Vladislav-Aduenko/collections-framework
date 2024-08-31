@@ -1,4 +1,3 @@
-
 package telran.util;
 
 import org.junit.jupiter.api.BeforeEach;

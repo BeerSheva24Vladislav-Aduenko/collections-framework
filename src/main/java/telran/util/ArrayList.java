@@ -97,7 +97,7 @@ public class ArrayList<T> implements List<T> {
     @Override
     public boolean removeIf(Predicate<T> predicate) {
        int indexTo = 0;
-       Predicate<T> negPred = predicate.negate();
+       Predicate<T> negPred = predicate.negate(); //not to apply "!" operator at each iteration
        for(int currentIndex = 0; currentIndex < size; currentIndex++) {
         T current = (T)array[currentIndex];
             if(negPred.test(current)) {
@@ -115,7 +115,7 @@ public class ArrayList<T> implements List<T> {
         private boolean flNext = false;
         @Override
         public boolean hasNext() {
-            flNext = true;
+           
            return currentIndex < size;
         }
 
@@ -125,6 +125,7 @@ public class ArrayList<T> implements List<T> {
             if(!hasNext()) {
                 throw new NoSuchElementException();
             }
+            flNext = true;
             return (T) array[currentIndex++];
         }
         @Override
